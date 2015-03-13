@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Course
+        psr4_prefix: Course
+        src_path: app
