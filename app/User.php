@@ -36,17 +36,31 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasOne('Course\UserProfile');
     }
 
-    public function getFullNameAttribute()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
-
     public function setPasswordAttribute($value)
     {
         if ( ! empty ($value))
         {
             $this->attributes['password'] = bcrypt($value);
         }
+    }
+
+    public function scopeName($query, $name)
+    {
+        if(trim($name) != '')
+        {
+            $query->where('full_name', 'LIKE', "%$name%");
+        }
+    }
+
+    /**
+     * Sobrescribimos el método save para que siempre tengamos el campo full_name
+     */
+    public function save()
+    {
+        // El valor de full_name lo generamos concatenando first_name y last_name
+        $this->full_name = trim($this->first_name . ' ' . $this->last_name);
+
+        parent::save();
     }
 
 }

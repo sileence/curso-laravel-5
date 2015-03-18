@@ -1,3 +1,6 @@
 /vendor
 /node_modules
 .env
+
+# Dejamos fuera la carpeta con configuracion de PhpStorm
+/.idea
