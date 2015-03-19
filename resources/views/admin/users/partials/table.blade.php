@@ -3,6 +3,7 @@
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Email</th>
+                            <th>Tipo</th>
                             <th>Acciones</th>
                         </tr>
                         @foreach ($users as $user)
@@ -10,6 +11,7 @@
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->full_name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ trans('options.types.'.$user->type) }}</td>
                             <td>
                                 <a href="{{ route('admin.users.edit', $user) }}">Editar</a>
                                 <a href="#!" class="btn-delete">Eliminar</a>

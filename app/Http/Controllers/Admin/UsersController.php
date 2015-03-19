@@ -24,14 +24,15 @@ class UsersController extends Controller {
         $this->user = User::findOrFail($route->getParameter('users'));
     }
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return Response
+     */
+	public function index(Request $request)
 	{
-		$users = User::orderBy('id', 'DESC')->paginate();
+		$users = User::filterAndPaginate($request->get('name'),$request->get('type'));
 
         return view('admin.users.index', compact('users'));
 	}
@@ -49,9 +50,9 @@ class UsersController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @internal param Redirector $redirect
+     * @param CreateUserRequest|Request $request
      * @return Response
+     * @internal param Redirector $redirect
      */
 	public function store(CreateUserRequest $request)
 	{

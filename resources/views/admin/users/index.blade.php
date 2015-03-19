@@ -14,6 +14,10 @@
 				@endif
 
 				<div class="panel-body">
+
+                    {!! Form::model(Request::all(), ['route' => 'admin.users.index', 'method' => 'GET', 'class' => 'navbar-form navbar-left pull-right', 'role' => 'search']) !!}
+                        @include('admin.partials.search')
+                    {!! Form::close() !!}
 				    <p>
 				        <a class="btn btn-info" href="{{ route('admin.users.create') }}" role="button">
 				            Nuevo usuario
@@ -21,7 +25,7 @@
 				    </p>
 				    <p>Hay {{ $users->total() }} usuarios</p>
                     @include('admin.users.partials.table')
-                    {!! $users->render() !!}
+                    {!! $users->appends(Request::only(['name','type']))->render() !!}
 				</div>
 			</div>
 		</div>
