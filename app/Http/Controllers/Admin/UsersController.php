@@ -32,7 +32,7 @@ class UsersController extends Controller {
      */
 	public function index(Request $request)
 	{
-		$users = User::name($request->get('name'))->orderBy('id', 'DESC')->paginate();
+		$users = User::filterAndPaginate($request->get('name'),$request->get('type'));
 
         return view('admin.users.index', compact('users'));
 	}

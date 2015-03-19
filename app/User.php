@@ -31,11 +31,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    // Queries
+
+    /**
+     * Filtrado y paginación de usuarios
+     * @param $name
+     * @param $type
+     * @return mixed
+     */
+    public static function filterAndPaginate($name, $type)
+    {
+        return User::name($name)
+            ->type($type)
+            ->orderBy('id', 'DESC')
+            ->paginate();
+    }
     public function profile()
     {
         return $this->hasOne('Course\UserProfile');
     }
 
+    /**
+     * Seteo del password encriptado
+     * @param $value
+     */
     public function setPasswordAttribute($value)
     {
         if ( ! empty ($value))
@@ -44,6 +63,26 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
     }
 
+    /**
+     * Query Scope para buscar por tipo de usuario
+     * @param $query
+     * @param $type
+     */
+    public function scopeType($query, $type)
+    {
+        $types = trans('options.types');
+
+        if($type != '' && isset($types[$type]) )
+        {
+            $query->where('type', $type);
+        }
+    }
+
+    /**
+     * Query Scope para buscar por full_name
+     * @param $query
+     * @param $name
+     */
     public function scopeName($query, $name)
     {
         if(trim($name) != '')
@@ -62,5 +101,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         parent::save();
     }
+
+
 
 }
