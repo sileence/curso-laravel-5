@@ -150,6 +150,7 @@ return [
 		'Course\Providers\ConfigServiceProvider',
 		'Course\Providers\EventServiceProvider',
 		'Course\Providers\RouteServiceProvider',
+        'Course\Providers\PaginatorServiceProvider'
 
 	],
 

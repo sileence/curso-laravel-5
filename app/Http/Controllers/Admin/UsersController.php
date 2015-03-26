@@ -16,7 +16,7 @@ class UsersController extends Controller {
 
     public function __construct()
     {
-        $this->beforeFilter('@findUser', ['only' => ['show', 'edit', 'update', 'destroy']]);
+        //$this->beforeFilter('@findUser', ['only' => ['show', 'edit', 'update', 'destroy']]);
     }
 
     public function findUser(Route $route)
@@ -31,7 +31,7 @@ class UsersController extends Controller {
 	 */
 	public function index(Request $request)
 	{
-		$users = User::name($request->get('name'))->orderBy('id', 'DESC')->paginate();
+		$users = User::filterAndPaginate($request->get('name'), $request->get('type'));
 
         return view('admin.users.index', compact('users'));
 	}
@@ -67,7 +67,7 @@ class UsersController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		dd(User::findOrFail($id));
 	}
 
 	/**
