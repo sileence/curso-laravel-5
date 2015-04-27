@@ -16,7 +16,7 @@ class UsersController extends Controller {
 
     public function __construct()
     {
-        //$this->beforeFilter('@findUser', ['only' => ['show', 'edit', 'update', 'destroy']]);
+        $this->beforeFilter('@findUser', ['only' => ['show', 'edit', 'update', 'destroy']]);
     }
 
     public function findUser(Route $route)
